@@ -1,0 +1,34 @@
+async function loadNames() {
+  const response = await import ('../DATA.json')
+    .then (({default: json})=>{
+      console.log(json)
+      let jsonfile = json ['restaurants']
+      let jsonlist = '';
+
+      jsonfile.forEach((data) =>{
+        jsonlist += `
+            <div class="list_item">
+            <img class="list_item_thumb" src="${data['pictureId']}" alt="${data['name']}" title="${data['name']}">
+            <div class="city">${data.city}</div>
+            <div class="list_item_content">
+                <p class="list_item_rating">
+                    Rating : 
+                    <a href="#" class="list_item_rating_value">${data['rating']}</a>
+                </p>
+                <h1 class="list_item_title"><a href="#">${data['name']}</a></h1>
+                <div class="list_item_desc">${data.description.slice(0, 100)}...</div>
+            </div>
+        </div>
+            `;
+      });
+      document.querySelector('#mcon').innerHTML = jsonlist;
+    });
+}
+
+
+<section class="content">
+    <div class="content-list">
+      <h2>Explore Restaurant</h2>
+      <div class="list" id="mcon"></div>
+    </div>
+  </section>
